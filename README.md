@@ -13,3 +13,13 @@
 3. Better quality reports.
 4. Graphs and other forms of data summarization.
 5. Relevant Configuration parameters.
+
+## Initialization steps
+1. Install conda if you havent already.
+2. create a conda environment with the most recent version of snakemake
+3. pull this directory from github.
+4. run the env_initialization.py script from the scripts folder of this program. 
+5. download any datasets you would like to use/test in the samples folder. 
+6. update the samples.csv file with the names of your samples as such {samples}.fasta (e.g. do not include the fasta in the name). 
+7. Try running the pipeline.
+8. Tell Kurtis when something inevitably doesn't work so he can update the documentation. 
