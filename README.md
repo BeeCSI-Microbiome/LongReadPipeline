@@ -5,7 +5,7 @@
 ### Current Features 
 
 1. Pipeline appears to run to completion wihout error up to binning.
-2. Pipeline allows you to download all containers using the env_initializationscript in scripts.
+2. Pipeline allows you to download all containers using the env_initialization.py script in /scripts.
 
 ### Future Improvements 
 1. Better sample loading (this has some quirks with snakemake).
