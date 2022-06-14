@@ -1,1 +1,3 @@
-
+name,location
+S1,samples/S1.fastq
+S2,samples/S2.fastq
