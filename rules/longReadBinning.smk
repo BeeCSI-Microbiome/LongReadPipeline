@@ -98,7 +98,9 @@ rule metabatBinning:
         mem=config["simplejob_mem"],
         time=config["runtime"]["simplejob"],    
     shell:
-        "metabat -i results/{wildcards.sample}/flye_assembly/{wildcards.sample}_Medaka_polish4/consensus.fasta -a results/{wildcards.sample}/{wildcards.sample}_depth.txt -o results/{wildcards.sample}/Binning/ -v"
+        "metabat -i results/{wildcards.sample}/flye_assembly/{wildcards.sample}_Medaka_polish4/consensus.fasta -a results/{wildcards.sample}/{wildcards.sample}_depth.txt -o results/{wildcards.sample}/Binning/{wildcards.sample} -v"
+        " ; "
+        "metabat -i results/{wildcards.sample}/flye_assembly/{wildcards.sample}_Medaka_polish4/consensus.fasta -o results/{wildcards.sample}/Binning/{wildcards.sample} -v"
         " ; "
         "touch results/{wildcards.sample}/{wildcards.sample}_binning_complete"
 
