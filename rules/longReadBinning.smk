@@ -59,7 +59,7 @@ rule longReadGenerateDepthFile_samtools:
         mem=config["simplejob_mem"],
         time=config["runtime"]["simplejob"],    
     shell:
-        "samtools view -b results/{wildcards.sample}/flye_assembly/{wildcards.sample}_polished_seqs.sam -o results/{wildcards.sample}/flye_assembly/{wildcards.sample}_polished_seqs.bam 2>> {log} "
+        "samtools view -b results/{wildcards.sample}/flye_assembly/{wildcards.sample}_polished_seqs.sam -o results/{wildcards.sample}/flye_assembly/{wildcards.sample}_polished_seqs.bam 2> {log} "
         ";"
         "samtools sort -o results/{wildcards.sample}/flye_assembly/{wildcards.sample}_polished_seqs_sort.bam results/{wildcards.sample}/flye_assembly/{wildcards.sample}_polished_seqs.bam 2>> {log} "
         ";"
@@ -98,9 +98,9 @@ rule metabatBinning:
         mem=config["simplejob_mem"],
         time=config["runtime"]["simplejob"],    
     shell:
-        "metabat -i results/{wildcards.sample}/flye_assembly/{wildcards.sample}_Medaka_polish4/consensus.fasta -a results/{wildcards.sample}/{wildcards.sample}_depth.txt -o results/{wildcards.sample}/Binning/{wildcards.sample} -v"
+        "metabat -i results/{wildcards.sample}/flye_assembly/{wildcards.sample}_Medaka_polish4/consensus.fasta -a results/{wildcards.sample}/{wildcards.sample}_depth.txt -o results/{wildcards.sample}/Binning/{wildcards.sample} -v 2> {log}"
         " ; "
-        "metabat -i results/{wildcards.sample}/flye_assembly/{wildcards.sample}_Medaka_polish4/consensus.fasta -o results/{wildcards.sample}/Binning/{wildcards.sample} -v"
+        "metabat -i results/{wildcards.sample}/flye_assembly/{wildcards.sample}_Medaka_polish4/consensus.fasta -o results/{wildcards.sample}/Binning/{wildcards.sample} -v 2>> {log}"
         " ; "
         "touch results/{wildcards.sample}/{wildcards.sample}_binning_complete"
 
