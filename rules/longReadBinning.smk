@@ -59,7 +59,7 @@ rule longReadGenerateDepthFile_samtools:
         mem=config["simplejob_mem"],
         time=config["runtime"]["simplejob"],    
     shell:
-        "samtools view -b results/{sample}/flye_assembly/{sample}_polished_seqs.sam -o results/{wildcards.sample}/flye_assembly/{wildcards.sample}_polished_seqs.bam 2>> {log} "
+        "samtools view -b results/{wildcards.sample}/flye_assembly/{wildcards.sample}_polished_seqs.sam -o results/{wildcards.sample}/flye_assembly/{wildcards.sample}_polished_seqs.bam 2>> {log} "
         ";"
         "samtools sort -o results/{wildcards.sample}/flye_assembly/{wildcards.sample}_polished_seqs_sort.bam results/{wildcards.sample}/flye_assembly/{wildcards.sample}_polished_seqs.bam 2>> {log} "
         ";"
@@ -70,7 +70,7 @@ rule longReadMetabatDepthFile:
     input:
         "results/{sample}/flye_assembly/{sample}_polished_seqs_sort.bam",
     output:
-        "results/{sample}_depth.txt"
+        "results/{sample}/{sample}_depth.txt"
     priority: 80
     params:
     container:
@@ -81,11 +81,30 @@ rule longReadMetabatDepthFile:
         mem=config["simplejob_mem"],
         time=config["runtime"]["simplejob"],    
     shell:
-        "jgi_summarize_bam_contig_depths --outputDepth results/{wildcards.sample}_depth.txt results/{wildcards.sample}/flye_assembly/*sort.bam 2>> {log} "  
+        "jgi_summarize_bam_contig_depths --outputDepth results/{wildcards.sample}/{wildcards.sample}_depth.txt results/{wildcards.sample}/flye_assembly/*sort.bam 2>> {log} "  
+
+rule metabatBinning:
+    input:
+        "results/{sample}/{sample}_depth.txt",
+    output:
+        "results/{sample}/{sample}_binning_complete"
+    priority: 80
+    params:
+    container:
+        "./rules/envs/metabat2:2.15--h986a166_1"  
+    log:
+        "results/{sample}/logs/longRead/{sample}_MetabatBinning.log"
+    resources:
+        mem=config["simplejob_mem"],
+        time=config["runtime"]["simplejob"],    
+    shell:
+        "metabat -i results/{wildcards.sample}/flye_assembly/{wildcards.sample}_Medaka_polish4/consensus.fasta -a results/{wildcards.sample}/{wildcards.sample}_depth.txt -o results/{wildcards.sample}/Binning/ -v"
+        " ; "
+        "touch results/{wildcards.sample}/{wildcards.sample}_binning_complete"
 
 rule binning_complete: 
     input:
-        expand("results/{sample}_depth.txt", sample = SAMPLES),
+        expand("results/{sample}/{sample}_binning_complete", sample = SAMPLES),
     output:
         "finished_binning",
         "finished_pipeline",
