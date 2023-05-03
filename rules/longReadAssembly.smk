@@ -4,7 +4,7 @@ from snakemake.io import load_configfile
 from snakemake.utils import update_config as snakemake_update_config
 
 sample = SAMPLES
-fastqfolder = "/home/AAFC-AAC/clarkeku/LongReadSnakemake/pipeline/samples/"
+fastqfolder = ""
 configfile:"./config.yaml"
 
 
@@ -18,7 +18,7 @@ configfile:"./config.yaml"
 
 rule initializeLongRead:
     input: # Fix this input so that it works for a specific sample file. 
-        #fastq = "/home/AAFC-AAC/clarkeku/LongReadSnakemake/data/{sample}.fastq"
+        #fastq = ""
         "samples/{sample}.fastq"
         #unpack(sampleTable['name' == {sample}, 'location']),
     output:
